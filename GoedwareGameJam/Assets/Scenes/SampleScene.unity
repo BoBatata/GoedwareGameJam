@@ -1453,7 +1453,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: -974262549384822930, guid: 3b8a401fc0557f14c87fbce23799653a, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1610,9 +1610,11 @@ GameObject:
   - component: {fileID: 1075738550}
   - component: {fileID: 1075738549}
   - component: {fileID: 1075738548}
+  - component: {fileID: 1075738553}
   - component: {fileID: 1075738547}
   - component: {fileID: 1075738551}
-  m_Layer: 0
+  - component: {fileID: 1075738554}
+  m_Layer: 6
   m_Name: '[Placeholder] NPC'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1725,6 +1727,46 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCController
   _agent: {fileID: 0}
+--- !u!136 &1075738553
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1075738546}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1075738554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1075738546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32526092add30994fa858c2b036d8074, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueNPCs
+  dialogues:
+  - Teste
+  - Teste1
+  - Teste2
+  - Teste3
 --- !u!1 &1110789107
 GameObject:
   m_ObjectHideFlags: 0
