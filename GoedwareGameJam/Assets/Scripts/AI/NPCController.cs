@@ -26,13 +26,35 @@ public class NPCController : BaseAI
     protected override void Update()
     {
         base.Update();
-
-        // // Se estiver infectado, você pode mudar comportamento futuramente aqui
-        // if (canBeInfected && blackboard.isInfected)
-        // {
-        //     // Exemplo: no futuro pode trocar para "SeekPlayerState"
-        //     // stateMachine.ChangeState(new SeekPlayerState(this));
-        // }
+        
+        if (_bef.isInfected)
+        {
+            if (CheckPlayerOnSight())
+            {
+                _stateMachine.ChangeState(new ChasePlayer(this));
+            }
+            else if (!CheckPlayerOnSight())
+            {
+                _stateMachine.ChangeState(new WanderToPlayerRoom(this));
+            }
+        }
     }
 
+    public bool CheckPlayerOnSight()
+    {
+        RaycastHit hit;
+        Vector3 offSet = new Vector3(0, .5f, 0);
+        GameObject player = GameObject.FindWithTag("Player");
+        Vector3 direction = player.transform.position - transform.position;
+
+        Debug.DrawRay(this.transform.position + offSet, direction + offSet, Color.blue);
+        if (Physics.Raycast(transform.position + offSet, direction + offSet, out hit, Mathf.Infinity))
+        {
+            if (hit.transform.tag != player.tag)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 }

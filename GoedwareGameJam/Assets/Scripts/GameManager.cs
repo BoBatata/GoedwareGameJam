@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    public static T[] SelectRandom<T>(T[] originalArray, int amount)
+    public T[] SelectRandom<T>(T[] originalArray, int amount)
     {
         // Garante que a quantidade não ultrapasse o tamanho do array
         if (amount > originalArray.Length)
