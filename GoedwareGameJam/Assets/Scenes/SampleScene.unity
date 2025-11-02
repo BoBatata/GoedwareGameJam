@@ -395,9 +395,8 @@ GameObject:
   - component: {fileID: 455711269}
   - component: {fileID: 455711268}
   - component: {fileID: 455711267}
-  - component: {fileID: 455711271}
   m_Layer: 6
-  m_Name: '[Placeholder] Object'
+  m_Name: '[Placeholder] Object Once'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -495,18 +494,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &455711271
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 455711266}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 513fa26b714e66a498f2535bf7a96aaa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InteractableBase
 --- !u!1 &777107935
 GameObject:
   m_ObjectHideFlags: 0
@@ -519,26 +506,13 @@ GameObject:
   - component: {fileID: 777107939}
   - component: {fileID: 777107938}
   - component: {fileID: 777107937}
-  - component: {fileID: 777107936}
   m_Layer: 6
-  m_Name: '[Placeholder] Object (1)'
+  m_Name: '[Placeholder] Object Once'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &777107936
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 777107935}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 513fa26b714e66a498f2535bf7a96aaa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InteractableBase
 --- !u!65 &777107937
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -810,6 +784,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   speed: 4
+  _moveDir: {x: 0, y: 0}
 --- !u!114 &953761869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -877,26 +852,14 @@ GameObject:
   - component: {fileID: 1110789111}
   - component: {fileID: 1110789110}
   - component: {fileID: 1110789109}
-  - component: {fileID: 1110789108}
+  - component: {fileID: 1110789113}
   m_Layer: 6
-  m_Name: '[Placeholder] Object (2)'
+  m_Name: '[Placeholder] Object Search'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1110789108
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1110789107}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 513fa26b714e66a498f2535bf7a96aaa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InteractableBase
 --- !u!65 &1110789109
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -989,6 +952,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1110789113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1110789107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e69d5f2704f8c1d498e677efccd20ccf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableSearch
+  searchLevel: 0
+  timeToSearch: 3
+  timeLapsed: 0
 --- !u!1 &1743959868
 GameObject:
   m_ObjectHideFlags: 0
@@ -1112,26 +1090,14 @@ GameObject:
   - component: {fileID: 2129545282}
   - component: {fileID: 2129545281}
   - component: {fileID: 2129545280}
-  - component: {fileID: 2129545279}
+  - component: {fileID: 2129545284}
   m_Layer: 6
-  m_Name: '[Placeholder] Object (3)'
+  m_Name: '[Placeholder] Object Search'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2129545279
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2129545278}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 513fa26b714e66a498f2535bf7a96aaa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InteractableBase
 --- !u!65 &2129545280
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1224,6 +1190,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2129545284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2129545278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e69d5f2704f8c1d498e677efccd20ccf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableSearch
+  searchLevel: 0
+  timeToSearch: 3
+  timeLapsed: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

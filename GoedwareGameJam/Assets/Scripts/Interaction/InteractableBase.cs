@@ -1,18 +1,25 @@
-using System;
 using UnityEngine;
 
-public class InteractableBase : MonoBehaviour
+public abstract class InteractableBase : MonoBehaviour
 {
-    private Renderer renderer;
+    protected Renderer _renderer;
+    protected bool isBeingInteracted = false;
 
-    private void Awake()
+    protected virtual void Awake()
     {
-        renderer = GetComponent<Renderer>();
+        _renderer = GetComponent<Renderer>();
     }
 
-    public void CloseCheck()
+    public virtual void Interact(bool isInteracting)
+    {
+        isBeingInteracted = isInteracting;
+    }
+
+    public virtual void CloseCheck()
     {
         print("Perto para interagir!");
-        renderer.material.color = Color.red;
+        _renderer.material.color = Color.red;
     }
+    
+    
 }

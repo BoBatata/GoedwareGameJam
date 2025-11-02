@@ -1,14 +1,32 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerInteraction : MonoBehaviour
 {
     [SerializeField] private float interactionRange;
     [SerializeField] private LayerMask layerMask;
 
+    private Collider closestObject;
+
     private void Update()
     {
+        CloseInteractableObj();
+    }
+
+    public void InteractHandler(bool isInteracting)
+    {
+        if(closestObject == null) return;
+        if (closestObject.TryGetComponent(out InteractableBase interactable))
+        {
+            interactable.Interact(isInteracting);
+        }
+    }
+
+    private void CloseInteractableObj()
+    {
         Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRange, layerMask);
-        Collider closestObject = colliders[0];
+        if (colliders.Length == 0) return;
+        closestObject = colliders[0];
         float distanceToClosest = Vector3.Distance(transform.position, closestObject.transform.position);
         Debug.DrawLine(transform.position, closestObject.transform.position, Color.red);
         
@@ -27,10 +45,7 @@ public class PlayerInteraction : MonoBehaviour
                 distanceToClosest = distanceToCurrent;
             }
         }
-        
-
     }
-
 
     private void OnDrawGizmos()
     {
