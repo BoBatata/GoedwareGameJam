@@ -51,7 +51,7 @@ public class BaseAI : MonoBehaviour
         Debug.DrawRay(_agent.transform.position + offSet, direction + offSet, Color.blue);
         if (Physics.Raycast(_agent.transform.position + offSet, direction + offSet, out hit, Mathf.Infinity))
         {
-            if (hit.transform.tag != player.tag)
+            if (hit.transform.tag != player.tag || !GameManager.Instance.player.canBeInSight)
             {
                 return false;
             }

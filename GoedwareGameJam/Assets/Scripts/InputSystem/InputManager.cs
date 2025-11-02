@@ -36,4 +36,7 @@ public class InputManager : MonoBehaviour
     
     public void EnableInput() => inputController.Enable();
     public void DisableInput() => inputController.Disable();
+    
+    public void EnableInputWalk() => inputController.Player.Walk.Enable();
+    public void DisableInputWalk() => inputController.Player.Walk.Disable();
 }

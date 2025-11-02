@@ -10,13 +10,15 @@ public class PlayerBehavior : MonoBehaviour
         Run
     }
     
-    private InputManager _inputManager;
+    public InputManager inputManager;
     private PlayerMovement _playerMovement;
     private PlayerInteraction _playerInteraction;
 
+    [SerializeField] public bool canBeInSight = true;
+
     private void Awake()
     {
-        _inputManager = new InputManager();
+        inputManager = new InputManager();
         _playerMovement = GetComponent<PlayerMovement>();
         _playerInteraction = GetComponent<PlayerInteraction>();
     }
@@ -25,11 +27,11 @@ public class PlayerBehavior : MonoBehaviour
     {
         if (GameManager.Instance.dialogueManager.IsDialogueActive)
         {
-            GameManager.Instance.dialogueManager.TryAdvanceDialogue(_inputManager.nextDialogue);
+            GameManager.Instance.dialogueManager.TryAdvanceDialogue(inputManager.nextDialogue);
             return;
         }
         
-        _playerMovement.WalkHandler(_inputManager.MoveDir);
-        _playerInteraction.InteractHandler(_inputManager.interact);
+        _playerMovement.WalkHandler(inputManager.MoveDir);
+        _playerInteraction.InteractHandler(inputManager.interact);
     }
 }

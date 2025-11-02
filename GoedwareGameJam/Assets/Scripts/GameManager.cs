@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     
+    public PlayerBehavior player;
+    
     [Header("Managers")]
     public DialogueManager dialogueManager;
     public AiManager aiManager;
@@ -30,6 +32,8 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+        
+        player = FindObjectOfType<PlayerBehavior>();
 
         RandomSpotsWithKeys(3);
     }

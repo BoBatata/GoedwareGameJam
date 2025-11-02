@@ -19,6 +19,4 @@ public abstract class InteractableBase : MonoBehaviour
         print("Perto para interagir!");
         _renderer.material.color = Color.red;
     }
-    
-    
 }
