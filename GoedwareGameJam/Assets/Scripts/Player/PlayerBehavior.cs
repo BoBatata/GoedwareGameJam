@@ -23,7 +23,13 @@ public class PlayerBehavior : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.dialogueManager.IsDialogueActive)
+        {
+            GameManager.Instance.dialogueManager.TryAdvanceDialogue(_inputManager.nextDialogue);
+            return;
+        }
+        
         _playerMovement.WalkHandler(_inputManager.MoveDir);
-        _playerInteraction.InteractHandler(_inputManager.interactHolding);
+        _playerInteraction.InteractHandler(_inputManager.interact);
     }
 }

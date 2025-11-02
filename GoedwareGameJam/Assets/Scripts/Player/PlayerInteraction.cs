@@ -6,7 +6,7 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private float interactionRange;
     [SerializeField] private LayerMask layerMask;
 
-    private Collider closestObject;
+    private Collider _closestObject;
 
     private void Update()
     {
@@ -15,8 +15,8 @@ public class PlayerInteraction : MonoBehaviour
 
     public void InteractHandler(bool isInteracting)
     {
-        if(closestObject == null) return;
-        if (closestObject.TryGetComponent(out InteractableBase interactable))
+        if(_closestObject == null) return;
+        if (_closestObject.TryGetComponent(out InteractableBase interactable))
         {
             interactable.Interact(isInteracting);
         }
@@ -26,11 +26,11 @@ public class PlayerInteraction : MonoBehaviour
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRange, layerMask);
         if (colliders.Length == 0) return;
-        closestObject = colliders[0];
-        float distanceToClosest = Vector3.Distance(transform.position, closestObject.transform.position);
-        Debug.DrawLine(transform.position, closestObject.transform.position, Color.red);
+        _closestObject = colliders[0];
+        float distanceToClosest = Vector3.Distance(transform.position, _closestObject.transform.position);
+        Debug.DrawLine(transform.position, _closestObject.transform.position, Color.red);
         
-        if (closestObject.TryGetComponent(out InteractableBase interactable))
+        if (_closestObject.TryGetComponent(out InteractableBase interactable))
         {
             interactable.CloseCheck();
         }
@@ -41,7 +41,7 @@ public class PlayerInteraction : MonoBehaviour
 
             if (distanceToCurrent < distanceToClosest)
             {
-                closestObject = colliders[i];
+                _closestObject = colliders[i];
                 distanceToClosest = distanceToCurrent;
             }
         }

@@ -8,7 +8,8 @@ public class InputManager : MonoBehaviour
     public InputController inputController;
     
     public Vector2 MoveDir => inputController.Player.Walk.ReadValue<Vector2>();
-    public bool interactHolding;
+    public bool interact;
+    public bool nextDialogue;
 
     public InputManager(){
         inputController = new InputController();
@@ -16,20 +17,21 @@ public class InputManager : MonoBehaviour
         
         inputController.Player.Interact.performed += OnInteract;
         inputController.Player.Interact.canceled += OnInteract;
+        
+        
+        inputController.Player.Dialogue.performed += OnNextDialogue;
+        inputController.Player.Dialogue.canceled  += OnNextDialogue;
     }
 
 
     public void OnInteract(InputAction.CallbackContext context)
     {
-        if (context.performed)
-        {
-            interactHolding = true;
-        }
-
-        if (context.canceled)
-        {
-            interactHolding = false;
-        }
+        interact = context.performed;
+    }
+    
+    private void OnNextDialogue(InputAction.CallbackContext context)
+    {
+        nextDialogue = context.performed;
     }
     
     public void EnableInput() => inputController.Enable();

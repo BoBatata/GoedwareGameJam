@@ -3,7 +3,6 @@ using UnityEngine;
 public abstract class InteractableBase : MonoBehaviour
 {
     protected Renderer _renderer;
-    protected bool isBeingInteracted = false;
 
     protected virtual void Awake()
     {
@@ -12,7 +11,7 @@ public abstract class InteractableBase : MonoBehaviour
 
     public virtual void Interact(bool isInteracting)
     {
-        isBeingInteracted = isInteracting;
+
     }
 
     public virtual void CloseCheck()
