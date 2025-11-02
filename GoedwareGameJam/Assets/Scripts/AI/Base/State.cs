@@ -1,6 +1,4 @@
-using UnityEngine;
-
-public class State : MonoBehaviour
+public abstract class State
 {
     protected BaseAI _entity;
 

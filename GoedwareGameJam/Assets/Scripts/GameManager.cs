@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     
     [Header("Managers")]
     public DialogueManager dialogueManager;
+    public AiManager aiManager;
 
     [Header("Game Status")] 
     [SerializeField] private int keysToWin;
