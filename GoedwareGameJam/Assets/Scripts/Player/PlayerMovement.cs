@@ -3,43 +3,35 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private InputManager _inputManager;
     private Rigidbody _rb;
 
     [Header("Movement Variables")]
     [SerializeField] private int speed;
-    private Vector2 _moveDir;
+    public Vector2 _moveDir;
     private Vector3 _currentMoveDir;
 
     void Awake()
     {
-        _inputManager = new InputManager();
         _rb = GetComponent<Rigidbody>();
     }
 
-    void Update()
+    // private void RotateHanlder()
+    // {
+    //     Vector3 positionToLookAt = Camera.main.transform.rotation * Vector3.forward;
+    //
+    //     // positionToLookAt.x = currentMovement.x;
+    //     // positionToLookAt.y = 0.0f;
+    //     // positionToLookAt.z = currentMovement.z;
+    //
+    //     Quaternion currentRotation = transform.rotation;
+    //     Quaternion targetRotation = Quaternion.LookRotation(positionToLookAt);
+    //     transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, 10 * Time.deltaTime);
+    // }
+
+
+    public void WalkHandler(Vector3 direction)
     {
-        WalkHandler();
-        RotateHanlder();
-    }
-
-    private void RotateHanlder()
-    {
-        Vector3 positionToLookAt = Camera.main.transform.rotation * Vector3.forward;
-
-        // positionToLookAt.x = currentMovement.x;
-        // positionToLookAt.y = 0.0f;
-        // positionToLookAt.z = currentMovement.z;
-
-        Quaternion currentRotation = transform.rotation;
-        Quaternion targetRotation = Quaternion.LookRotation(positionToLookAt);
-        transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, 10 * Time.deltaTime);
-    }
-
-
-    private void WalkHandler()
-    {
-        _moveDir = _inputManager.MoveDir;
+        _moveDir = direction;
 
         _currentMoveDir.x = _moveDir.x;
         _currentMoveDir.y = _rb.linearVelocity.y;
