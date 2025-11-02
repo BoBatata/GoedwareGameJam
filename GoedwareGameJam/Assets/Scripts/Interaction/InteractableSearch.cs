@@ -5,10 +5,29 @@ public class InteractableSearch : InteractableBase
     [SerializeField] private int searchLevel;
     [SerializeField] private float timeToSearch;
     [SerializeField] private float timeLapsed;
+    [SerializeField] public bool _doHaveKey;
+    private bool _alreadySearched;
     private bool _interacting;
 
     public override void Interact(bool isInteract)
     {
+        if(_alreadySearched)  return;
+        
+        if (searchLevel == 2)
+        {
+            if (_doHaveKey)
+            {
+                GameManager.Instance.EarnKey(1);
+                _alreadySearched = true;
+            }
+            else if (!_doHaveKey)
+            {
+                Debug.Log("Não tem nada aqui");
+                _alreadySearched = true;
+            }
+            
+        }
+        
         if (isInteract)
         {
             _interacting = true;
