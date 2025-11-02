@@ -1,19 +1,26 @@
 using UnityEngine;
 
-public class DialogueObj : InteractableOnce
+public class DialogueNPCs : DialogueObj
 {
-    [SerializeField] protected string[] dialogues;
-    
+    private BaseAI baseAi;
+    protected override void Awake()
+    {
+        base.Awake();
+        baseAi = GetComponent<BaseAI>();
+    }
+
     public override void Interact(bool isInteract)
     {
         if (isInteract && !_hasInteracted)
         {
             GameManager.Instance.dialogueManager.StartDialogue(dialogues);
+            baseAi._bef.isInteracting = true;
             _hasInteracted =  true;
         }
 
         if (!isInteract)
         {
+            baseAi._bef.isInteracting = false;
             _hasInteracted = false;
         }
     }
