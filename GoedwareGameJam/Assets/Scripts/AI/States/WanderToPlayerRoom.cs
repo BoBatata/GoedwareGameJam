@@ -14,6 +14,12 @@ public class WanderToPlayerRoom : State
 
     public override void Update()
     {
+        if (_entity.CheckPlayerOnSight())
+        {
+            _entity._stateMachine.ChangeState(new ChasePlayer(_entity));
+            return;
+        }
+        
         if (!_entity._agent.pathPending && _entity._agent.remainingDistance < 0.5f)
         {
             _entity._bef.currentRoom = targetRoom;

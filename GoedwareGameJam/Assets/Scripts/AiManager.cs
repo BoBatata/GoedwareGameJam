@@ -7,6 +7,7 @@ public class AiManager : MonoBehaviour
     [SerializeField] private Room[] rooms;
     [SerializeField] public Room playerClosestRoom;
     [SerializeField] public BaseAI[] npcs;
+    [SerializeField] public BaseAI[] npcsInfected;
     private GameObject player;
 
     private void Awake()
@@ -51,11 +52,20 @@ public class AiManager : MonoBehaviour
     }
         private void RandomNPCInfected(int amount)
         {
-            BaseAI[] npcsInfected = GameManager.Instance.SelectRandom(npcs, amount);
+            npcsInfected = GameManager.Instance.SelectRandom(npcs, amount);
     
             foreach (var npc in npcsInfected)
             {
                 npc._bef.isInfected = true;
+            }
+        }
+
+        public void ActivateInfectedHunt(bool toggle)
+        {
+            foreach (var infected in npcsInfected)
+            {
+                infected._bef.isInfectedHuntTime = toggle;
+                infected.ForceChangeState(new IdleState(infected));
             }
         }
     

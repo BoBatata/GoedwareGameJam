@@ -9,12 +9,18 @@ public class GameManager : MonoBehaviour
     [Header("Managers")]
     public DialogueManager dialogueManager;
     public AiManager aiManager;
+    public UIManager uiManager;
 
     [Header("Game Status")] 
     [SerializeField] private int keysToWin;
     [SerializeField] private int currentKeys;
 
     [SerializeField] private InteractableSearch[] searchSpots;
+
+    [Header("Hunt Timer")] 
+    [SerializeField] private float remainingTime;
+    [SerializeField] private float currentRemainingTime = 60f;
+    [SerializeField] private bool huntTime = false;
     
     
 
@@ -30,9 +36,32 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        TimerHandler();
+        
         if (currentKeys >= keysToWin)
         {
             Debug.Log("Ganhou!");
+        }
+    }
+
+    private void TimerHandler()
+    {
+        currentRemainingTime -= Time.deltaTime;
+        int minutes = Mathf.FloorToInt(currentRemainingTime / 60);
+        int seconds = Mathf.FloorToInt(currentRemainingTime % 60);
+        uiManager.UpdateTimer(minutes, seconds);
+
+        if (currentRemainingTime <= 0 && !huntTime)
+        {
+            aiManager.ActivateInfectedHunt(true);
+            huntTime = true;
+            currentRemainingTime = remainingTime;
+        }
+        else if (currentRemainingTime <= 0 && huntTime)
+        {
+            aiManager.ActivateInfectedHunt(false);
+            huntTime = false;
+            currentRemainingTime = remainingTime - 60;
         }
     }
 

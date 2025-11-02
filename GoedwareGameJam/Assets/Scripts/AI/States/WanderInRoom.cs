@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class WanderInRoom : State
 {
-    private float waitTime = 10f;
+    private float waitTime = 5f;
     private float timer = 0;
     
     public WanderInRoom(BaseAI _entity) : base(_entity) { }
@@ -23,6 +23,12 @@ public class WanderInRoom : State
 
     public override void Update()
     {
+        if (_entity.CheckPlayerOnSight() && _entity._bef.isInfected && _entity._bef.isInfectedHuntTime)
+        {
+            _entity._stateMachine.ChangeState(new IdleState(_entity));
+            return;
+        }
+        
         if (_entity._bef.currentRoom == null)
         {
             _entity._stateMachine.ChangeState(new WanderToRoomState(_entity));

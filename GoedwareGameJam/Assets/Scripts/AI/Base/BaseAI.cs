@@ -23,6 +23,8 @@ public class BaseAI : MonoBehaviour
     
     protected virtual void Update()
     {
+        Debug.Log("Está infectado: "+_bef.isInfected + "; Está na hora da putaria?: " +_bef.isInfectedHuntTime);
+        
         if (!_bef.isInteracting)
         {
             _agent.isStopped = false;
@@ -34,4 +36,26 @@ public class BaseAI : MonoBehaviour
         }
     }
 
+    public void ForceChangeState(IdleState state)
+    {
+        _stateMachine.ChangeState(state);
+    }
+    
+    public bool CheckPlayerOnSight()
+    {
+        RaycastHit hit;
+        Vector3 offSet = new Vector3(0, .5f, 0);
+        GameObject player = GameObject.FindWithTag("Player");
+        Vector3 direction = player.transform.position - _agent.transform.position;
+
+        Debug.DrawRay(_agent.transform.position + offSet, direction + offSet, Color.blue);
+        if (Physics.Raycast(_agent.transform.position + offSet, direction + offSet, out hit, Mathf.Infinity))
+        {
+            if (hit.transform.tag != player.tag)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 }
