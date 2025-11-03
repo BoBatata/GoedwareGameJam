@@ -11,6 +11,11 @@ public class NPCController : BaseAI
     {
         base.Awake();
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+    }
+
+    protected override void Start()
+    {
+        base.Start();
         _stateMachine.ChangeState(new IdleState(this));
     }
 

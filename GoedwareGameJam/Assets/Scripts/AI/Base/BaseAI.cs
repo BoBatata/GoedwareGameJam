@@ -49,21 +49,20 @@ public class BaseAI : MonoBehaviour
         _bef.isPlayerInSight = false;
 
         if (_bef.player == null) return;
-        
+    
         RaycastHit hit;
         Vector3 offSet = new Vector3(0, .5f, 0);
-        GameObject player = GameObject.FindWithTag("Player");
-        Vector3 direction = player.transform.position - _agent.transform.position;
+        Vector3 direction = _bef.player.position - _agent.transform.position;
 
-        Debug.DrawRay(_agent.transform.position + offSet, direction + offSet, Color.blue);
-        if (Physics.Raycast(_agent.transform.position + offSet, direction + offSet, out hit, Mathf.Infinity, LayerMask.GetMask("Player")))
+        Debug.DrawRay(_agent.transform.position + offSet, direction, Color.blue);
+        if (Physics.Raycast(_agent.transform.position + offSet, direction, out hit, Mathf.Infinity))
         {
-            if (hit.transform != null && hit.transform.CompareTag("Player"))
+            if (hit.transform.CompareTag("Player"))
             {
                 _bef.isPlayerInSight = true;
-                return;
             }
         }
-        _bef.isPlayerInSight = false;
+        
+        canChasePlayer = _bef.isInfected && _bef.isInfectedHuntTime && _bef.isPlayerInSight;
     }
 }

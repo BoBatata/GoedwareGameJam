@@ -10,41 +10,18 @@ public class WanderInRoom : State
 
     public override void Enter()
     {
-        timer = 0;
-        if (_entity._bef.currentRoom == null)
-        {
-            _entity._stateMachine.ChangeState(new WanderToRoomState(_entity));
-            return;
-        }
-        
         Vector3 target = _entity._bef.currentRoom.GetRandomPointInRoom();
         _entity._agent.SetDestination(target);
     }
 
     public override void Update()
     {
-        if (_entity.canChasePlayer && _entity._bef.isInfected && _entity._bef.isInfectedHuntTime && _entity._bef.isPlayerInSight && GameManager.Instance.player.canBeInSight)
+        if (_entity._bef.isPlayerInSight && _entity.canChasePlayer && _entity._bef.isInfected && _entity._bef.isInfectedHuntTime)
         {
             _entity._stateMachine.ChangeState(new ChasePlayer(_entity));
             return;
         }
         
-        if (_entity._bef.currentRoom == null)
-        {
-            _entity._stateMachine.ChangeState(new WanderToRoomState(_entity));
-            return;
-        }
-        
-
-        if (!_entity._agent.pathPending && _entity._agent.remainingDistance < 0.5f)
-        {
-            timer += Time.deltaTime;
-            if (timer >= waitTime)
-            {
-                Vector3 newTarget = _entity._bef.currentRoom.GetRandomPointInRoom();
-                _entity._agent.SetDestination(newTarget);
-                timer = 0f;
-            }
-        }
+        _entity._stateMachine.ChangeState(new IdleState(_entity));
     }
 }

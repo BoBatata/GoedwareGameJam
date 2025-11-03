@@ -9,17 +9,12 @@ public class WanderToPlayerRoom : State
     public override void Enter()
     {
         targetRoom = GameManager.Instance.aiManager.playerClosestRoom;
-        if (targetRoom == null)
-        {
-            _entity._stateMachine.ChangeState(new WanderToRoomState(_entity));
-            return;
-        }
         _entity._agent.SetDestination(targetRoom.transform.position);
     }
 
     public override void Update()
     {
-        if (_entity._bef.isPlayerInSight && _entity.canChasePlayer && GameManager.Instance.player.canBeInSight)
+        if (_entity._bef.isPlayerInSight && _entity.canChasePlayer && _entity._bef.isInfected && GameManager.Instance.player.canBeInSight)
         {
             _entity._stateMachine.ChangeState(new ChasePlayer(_entity));
             return;
@@ -28,7 +23,7 @@ public class WanderToPlayerRoom : State
         if (!_entity._agent.pathPending && _entity._agent.remainingDistance < 0.5f)
         {
             _entity._bef.currentRoom = targetRoom;
-            _entity._stateMachine.ChangeState(new WanderInRoom(_entity));
+            _entity._stateMachine.ChangeState(new IdleState(_entity));
         }
     }
 }

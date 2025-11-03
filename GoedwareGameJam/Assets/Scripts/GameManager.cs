@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public DialogueManager dialogueManager;
     public AiManager aiManager;
     public UIManager uiManager;
+    public SoundManager soundManager;
 
     [Header("Game Status")] 
     [SerializeField] private int keysToWin;
@@ -41,6 +42,7 @@ public class GameManager : MonoBehaviour
         player = FindObjectOfType<PlayerBehavior>();
 
         RandomSpotsWithKeys(3);
+        soundManager.PlaySound(1);
     }
 
     private void Update()
@@ -53,6 +55,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("Ganhou!");
             EndGame();
             uiManager.EndPanel(true, "You Escaped!");
+            soundManager.StopSound();
         }
     }
 
@@ -78,12 +81,14 @@ public class GameManager : MonoBehaviour
             aiManager.ActivateInfectedHunt(true);
             huntTime = true;
             currentRemainingTime = remainingTime;
+            soundManager.PlaySound(0);
         }
         else if (currentRemainingTime <= 0 && huntTime)
         {
             aiManager.ActivateInfectedHunt(false);
             huntTime = false;
             currentRemainingTime = remainingTime - 10;
+            soundManager.PlaySound(1);
         }
     }
 

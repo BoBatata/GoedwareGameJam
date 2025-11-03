@@ -55,7 +55,6 @@ public class AiManager : MonoBehaviour
     
             foreach (var npc in npcsInfected)
             {
-                npc.canChasePlayer = true;
                 npc._bef.isInfected = true;
             }
         }
