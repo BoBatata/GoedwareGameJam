@@ -24,6 +24,7 @@ public class UIManager : MonoBehaviour
 
     public void EndPanel(bool isActive, string text)
     {
+        Cursor.visible = true;
         endGamePanel.SetActive(isActive);
         endText.text = text;
     }
