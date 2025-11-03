@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         TimerHandler();
+        uiManager.UpdateKeyUI(currentKeys);
         
         if (currentKeys >= keysToWin)
         {

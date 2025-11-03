@@ -9,6 +9,8 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private GameObject endGamePanel;
     [SerializeField] private TextMeshProUGUI endText;
+    
+    [SerializeField] public Image[] keysImages;
 
     private void Update()
     {
@@ -19,6 +21,14 @@ public class UIManager : MonoBehaviour
         else if (!GameManager.Instance.huntTime)
         {
             timerText.color = Color.white;
+        }
+    }
+    
+    public void UpdateKeyUI(int current)
+    {
+        for (int i = 0; i < keysImages.Length; i++)
+        {
+            keysImages[i].gameObject.SetActive(i < current);
         }
     }
 
