@@ -17,6 +17,6 @@ public abstract class InteractableBase : MonoBehaviour
     public virtual void CloseCheck()
     {
         print("Perto para interagir!");
-        _renderer.material.color = Color.red;
     }
+    
 }

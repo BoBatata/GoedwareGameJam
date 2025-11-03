@@ -3,6 +3,13 @@ using UnityEngine;
 
 public class SpriteHandler : MonoBehaviour
 {
+    public SpriteRenderer spriteRenderer;
+
+    private void Start()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
     private void LateUpdate()
     {
         if (Camera.main == null) return;

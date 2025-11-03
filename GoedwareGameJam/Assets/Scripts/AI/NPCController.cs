@@ -1,25 +1,30 @@
+using System;
 using UnityEngine;
 
 public class NPCController : BaseAI
 {
+    private SpriteRenderer _spriteRenderer;
+    [SerializeField] private Sprite normalSprite;
+    [SerializeField] private Sprite parasiteSprite;
+    
     protected override void Awake()
     {
         base.Awake();
+        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        _stateMachine.ChangeState(new IdleState(this));
     }
 
-    protected override void Start()
+    protected override void Update()
     {
-        base.Start();
-        
-        // Define o estado inicial
-        _stateMachine.ChangeState(new IdleState(this));
+        base.Update();
 
-        // // Se começar já dentro de um cômodo
-        // if (startInRandomRoom)
-        // {
-        //     blackboard.currentRoom = RoomManager.Instance.GetRandomRoom();
-        //     if (blackboard.currentRoom != null)
-        //         transform.position = blackboard.currentRoom.GetRandomPointInside();
-        // }
+        if (_bef.isInfected && _bef.isInfectedHuntTime)
+        {
+            _spriteRenderer.sprite = parasiteSprite;
+        }
+        else
+        {
+            _spriteRenderer.sprite = normalSprite;
+        }
     }
 }

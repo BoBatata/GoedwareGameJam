@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class WanderInRoom : State
 {
-    private float waitTime = 5f;
+    private float waitTime = 2f;
     private float timer = 0;
     
     public WanderInRoom(BaseAI _entity) : base(_entity) { }
@@ -23,9 +23,9 @@ public class WanderInRoom : State
 
     public override void Update()
     {
-        if (_entity._bef.isPlayerInSight && _entity._bef.isInfected && _entity._bef.isInfectedHuntTime)
+        if (_entity.canChasePlayer && _entity._bef.isInfected && _entity._bef.isInfectedHuntTime && _entity._bef.isPlayerInSight && GameManager.Instance.player.canBeInSight)
         {
-            _entity._stateMachine.ChangeState(new IdleState(_entity));
+            _entity._stateMachine.ChangeState(new ChasePlayer(_entity));
             return;
         }
         
@@ -34,16 +34,16 @@ public class WanderInRoom : State
             _entity._stateMachine.ChangeState(new WanderToRoomState(_entity));
             return;
         }
-
-        timer += Time.deltaTime;
+        
 
         if (!_entity._agent.pathPending && _entity._agent.remainingDistance < 0.5f)
         {
+            timer += Time.deltaTime;
             if (timer >= waitTime)
             {
-                Vector3 target = _entity._bef.currentRoom.GetRandomPointInRoom();
-                _entity._agent.SetDestination(target);
-                timer = 0;
+                Vector3 newTarget = _entity._bef.currentRoom.GetRandomPointInRoom();
+                _entity._agent.SetDestination(newTarget);
+                timer = 0f;
             }
         }
     }

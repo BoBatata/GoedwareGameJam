@@ -6,6 +6,8 @@ public class BaseAI : MonoBehaviour
     public NavMeshAgent _agent;
     public StateMachine _stateMachine;
     public Beliefs _bef;
+    
+    public bool canChasePlayer = false;
 
     protected virtual void Awake()
     {
@@ -16,6 +18,7 @@ public class BaseAI : MonoBehaviour
     
     protected virtual void Start()
     {
+        _stateMachine.ChangeState(new IdleState(this));
         GameObject playerObj = GameObject.FindWithTag("Player");
         if (playerObj != null)
             _bef.player = playerObj.transform;
@@ -23,8 +26,6 @@ public class BaseAI : MonoBehaviour
     
     protected virtual void Update()
     {
-        Debug.Log("Está infectado: "+_bef.isInfected + "; Está na hora da putaria?: " +_bef.isInfectedHuntTime);
-        Debug.Log("Player está a vista: "+ _bef.isPlayerInSight);
         CheckPlayerOnSight();
         
         if (!_bef.isInteracting)
@@ -45,6 +46,10 @@ public class BaseAI : MonoBehaviour
     
     public void CheckPlayerOnSight()
     {
+        _bef.isPlayerInSight = false;
+
+        if (_bef.player == null) return;
+        
         RaycastHit hit;
         Vector3 offSet = new Vector3(0, .5f, 0);
         GameObject player = GameObject.FindWithTag("Player");
@@ -53,11 +58,12 @@ public class BaseAI : MonoBehaviour
         Debug.DrawRay(_agent.transform.position + offSet, direction + offSet, Color.blue);
         if (Physics.Raycast(_agent.transform.position + offSet, direction + offSet, out hit, Mathf.Infinity, LayerMask.GetMask("Player")))
         {
-            if (hit.transform.tag != player.tag || !GameManager.Instance.player.canBeInSight)
+            if (hit.transform != null && hit.transform.CompareTag("Player"))
             {
-                _bef.isPlayerInSight = false;
+                _bef.isPlayerInSight = true;
+                return;
             }
         }
-        _bef.isPlayerInSight = true;
+        _bef.isPlayerInSight = false;
     }
 }

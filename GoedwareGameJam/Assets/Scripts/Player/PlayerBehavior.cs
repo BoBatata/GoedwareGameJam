@@ -13,6 +13,7 @@ public class PlayerBehavior : MonoBehaviour
     public InputManager inputManager;
     private PlayerMovement _playerMovement;
     public PlayerInteraction playerInteraction;
+    public SpriteHandler spriteHandler;
 
     [SerializeField] public bool canBeInSight = true;
 
@@ -21,6 +22,7 @@ public class PlayerBehavior : MonoBehaviour
         inputManager = new InputManager();
         _playerMovement = GetComponent<PlayerMovement>();
         playerInteraction = GetComponent<PlayerInteraction>();
+        spriteHandler = GetComponentInChildren<SpriteHandler>();
     }
 
     private void Update()

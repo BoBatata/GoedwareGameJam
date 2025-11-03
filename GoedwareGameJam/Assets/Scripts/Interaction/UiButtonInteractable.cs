@@ -5,7 +5,7 @@ public class UiButtonInteractable : MonoBehaviour
 {
     public void GoToGame()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("Gameplay");
     }
 
     public void GoToMenu()

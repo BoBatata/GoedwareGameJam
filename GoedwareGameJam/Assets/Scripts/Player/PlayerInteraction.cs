@@ -8,6 +8,7 @@ public class PlayerInteraction : MonoBehaviour
     public bool isPlayerInteracting;
 
     public Collider _closestObject;
+    public bool isCloesestObjectLocked;
 
     private void Update()
     {
@@ -26,6 +27,8 @@ public class PlayerInteraction : MonoBehaviour
 
     private void CloseInteractableObj()
     {
+        if (isCloesestObjectLocked) return;
+        
         Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRange, layerMask);
         if (colliders.Length == 0) return;
         _closestObject = colliders[0];
@@ -47,12 +50,5 @@ public class PlayerInteraction : MonoBehaviour
                 distanceToClosest = distanceToCurrent;
             }
         }
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = new Color(0.75f, 0.0f, 0.0f, 0.75f);
-        
-        Gizmos.DrawWireSphere(transform.position, interactionRange);
     }
 }

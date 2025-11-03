@@ -1,63 +1,57 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
 public class SeeThroughWalls : MonoBehaviour
 {
+    [Header("Referências")]
     public Transform target;
-
-    public Transform obstruction;
-    float zoomSpeed = 2f;
+    public LayerMask obstructionMask;
+    
+    private Transform currentObstruction;
 
     private void LateUpdate()
     {
-        ViewObstructed();
+        HandleObstruction();
     }
 
-    void ViewObstructed()
+    void HandleObstruction()
     {
-        if (obstruction != null)
+        if (currentObstruction != null)
         {
-            foreach (Transform child in obstruction.parent)
+            RestoreObstruction(currentObstruction);
+            currentObstruction = null;
+        }
+        
+        if (Physics.Raycast(transform.position, target.position - transform.position, out RaycastHit hit, Vector3.Distance(target.position, transform.position), obstructionMask))
+        {
+            if (hit.collider.CompareTag("Wall"))
             {
-                child.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+                currentObstruction = hit.transform;
+                MakeTransparent(currentObstruction);
             }
         }
+    }
 
-        RaycastHit hit;
-
-        if (Physics.Raycast(transform.position, target.position - transform.position, out hit))
+    void MakeTransparent(Transform obj)
+    {
+        foreach (Transform child in obj.parent)
         {
-            Debug.DrawRay(transform.position, target.position - transform.position, Color.green);
-
-            if (hit.collider.gameObject.tag == "Wall" || hit.collider.gameObject.tag == "Ground")
+            var renderer = child.GetComponent<MeshRenderer>();
+            if (renderer != null)
             {
-                print(hit.collider.gameObject.name);
-
-                obstruction = hit.transform;
-                //obstruction.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
-
-                //obstruction.parent.GetComponentInChildren<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
-
-                foreach (Transform child in obstruction.parent)
-                {
-                    child.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
-                }
-
-                if (Vector3.Distance(obstruction.position, transform.position) >= 10f && Vector3.Distance(transform.position, target.position) >= 7f)
-                {
-                    transform.Translate(Vector3.forward * zoomSpeed * Time.deltaTime);
-                }
+                renderer.shadowCastingMode = ShadowCastingMode.ShadowsOnly;
             }
         }
-        else
-        {
-            obstruction.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+    }
 
-            if (Vector3.Distance(transform.position, target.position) < 4.5f)
+    void RestoreObstruction(Transform obj)
+    {
+        foreach (Transform child in obj.parent)
+        {
+            var renderer = child.GetComponent<MeshRenderer>();
+            if (renderer != null)
             {
-                transform.Translate(Vector3.back * zoomSpeed * Time.deltaTime);
+                renderer.shadowCastingMode = ShadowCastingMode.On;
             }
         }
     }

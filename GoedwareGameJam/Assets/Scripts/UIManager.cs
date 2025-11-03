@@ -1,10 +1,32 @@
 using UnityEngine;
 using TMPro;
-using System.Collections;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI timerText;
+    [SerializeField] public Slider playerSlider;
+
+    [SerializeField] private GameObject endGamePanel;
+    [SerializeField] private TextMeshProUGUI endText;
+
+    private void Update()
+    {
+        if (GameManager.Instance.huntTime)
+        {
+            timerText.color = Color.red;
+        }
+        else if (!GameManager.Instance.huntTime)
+        {
+            timerText.color = Color.white;
+        }
+    }
+
+    public void EndPanel(bool isActive, string text)
+    {
+        endGamePanel.SetActive(isActive);
+        endText.text = text;
+    }
 
     public void UpdateTimer(float minutes, float seconds)
     {

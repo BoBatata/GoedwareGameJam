@@ -30,7 +30,6 @@ public class AiManager : MonoBehaviour
     public Room GetRandomRoom()
     {
         Room room = rooms[Random.Range(0, rooms.Length)];
-        print(room);
         return room;
     }
     
@@ -56,6 +55,7 @@ public class AiManager : MonoBehaviour
     
             foreach (var npc in npcsInfected)
             {
+                npc.canChasePlayer = true;
                 npc._bef.isInfected = true;
             }
         }

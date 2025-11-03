@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -22,7 +23,11 @@ public class GameManager : MonoBehaviour
     [Header("Hunt Timer")] 
     [SerializeField] private float remainingTime;
     [SerializeField] private float currentRemainingTime = 60f;
-    [SerializeField] private bool huntTime = false;
+    [SerializeField] public bool huntTime = false;
+
+    [Header("Rooms")] 
+    [SerializeField] public List<InteractableSearch> spotsWithKeys;
+    [SerializeField] public List<InteractableSearch> spotsWithoutKeys;
     
     
 
@@ -45,7 +50,19 @@ public class GameManager : MonoBehaviour
         if (currentKeys >= keysToWin)
         {
             Debug.Log("Ganhou!");
+            EndGame();
+            uiManager.EndPanel(true, "You Escaped!");
         }
+    }
+
+    public void EndGame()
+    {
+        foreach (var npc in aiManager.npcs)
+        {
+            npc.gameObject.SetActive(false);
+        }
+        
+        player.inputManager.DisableInput();
     }
 
     private void TimerHandler()
@@ -65,47 +82,58 @@ public class GameManager : MonoBehaviour
         {
             aiManager.ActivateInfectedHunt(false);
             huntTime = false;
-            currentRemainingTime = remainingTime - 60;
+            currentRemainingTime = remainingTime - 10;
         }
     }
 
     private void RandomSpotsWithKeys(int amount)
     {
-        InteractableSearch[] spotsWithKeys = SelectRandom(searchSpots, amount);
+        foreach (var spot in SelectRandom(searchSpots, amount))
+        {
+            spotsWithKeys.Add(spot);
+        }
 
         foreach (var spot in spotsWithKeys)
         {
             spot._doHaveKey = true;
         }
+
+        foreach (var spot in searchSpots)
+        {
+            if (spot._doHaveKey == false)
+            {
+                spotsWithoutKeys.Add(spot);
+            }
+                
+        }
+        
+        // foreach (var npc in aiManager.npcs)
+        // {
+        //     npc.GetComponent<DialogueNPCs>().RandomCorrectAndWrongRoom();
+        // }
     }
     
     public T[] SelectRandom<T>(T[] originalArray, int amount)
     {
-        // Garante que a quantidade não ultrapasse o tamanho do array
         if (amount > originalArray.Length)
         {
-            Debug.LogWarning("Quantidade maior que o tamanho do array. Ajustando para valor máximo.");
             amount = originalArray.Length;
         }
-
-        // Cria uma cópia do array original para embaralhar
+        
         T[] copia = new T[originalArray.Length];
         for (int i = 0; i < originalArray.Length; i++)
         {
             copia[i] = originalArray[i];
         }
-
-        // Embaralhamento Fisher-Yates no array copiado
+        
         for (int i = 0; i < copia.Length; i++)
         {
             int indiceAleatorio = Random.Range(i, copia.Length);
-            // Troca de posição
             T temp = copia[i];
             copia[i] = copia[indiceAleatorio];
             copia[indiceAleatorio] = temp;
         }
-
-        // Cria um novo array com a quantidade desejada
+        
         T[] resultado = new T[amount];
         for (int i = 0; i < amount; i++)
         {
