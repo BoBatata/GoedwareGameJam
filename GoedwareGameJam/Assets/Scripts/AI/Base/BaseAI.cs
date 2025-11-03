@@ -24,6 +24,8 @@ public class BaseAI : MonoBehaviour
     protected virtual void Update()
     {
         Debug.Log("Está infectado: "+_bef.isInfected + "; Está na hora da putaria?: " +_bef.isInfectedHuntTime);
+        Debug.Log("Player está a vista: "+ _bef.isPlayerInSight);
+        CheckPlayerOnSight();
         
         if (!_bef.isInteracting)
         {
@@ -41,7 +43,7 @@ public class BaseAI : MonoBehaviour
         _stateMachine.ChangeState(state);
     }
     
-    public bool CheckPlayerOnSight()
+    public void CheckPlayerOnSight()
     {
         RaycastHit hit;
         Vector3 offSet = new Vector3(0, .5f, 0);
@@ -49,13 +51,13 @@ public class BaseAI : MonoBehaviour
         Vector3 direction = player.transform.position - _agent.transform.position;
 
         Debug.DrawRay(_agent.transform.position + offSet, direction + offSet, Color.blue);
-        if (Physics.Raycast(_agent.transform.position + offSet, direction + offSet, out hit, Mathf.Infinity))
+        if (Physics.Raycast(_agent.transform.position + offSet, direction + offSet, out hit, Mathf.Infinity, LayerMask.GetMask("Player")))
         {
             if (hit.transform.tag != player.tag || !GameManager.Instance.player.canBeInSight)
             {
-                return false;
+                _bef.isPlayerInSight = false;
             }
         }
-        return true;
+        _bef.isPlayerInSight = true;
     }
 }

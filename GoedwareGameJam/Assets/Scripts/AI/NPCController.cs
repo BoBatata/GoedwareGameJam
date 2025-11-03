@@ -22,22 +22,4 @@ public class NPCController : BaseAI
         //         transform.position = blackboard.currentRoom.GetRandomPointInside();
         // }
     }
-    
-    protected override void Update()
-    {
-        base.Update();
-        //
-        //
-        // if (_bef.isInfected && _bef.isInfectedHuntTime)
-        // {
-        //     if (CheckPlayerOnSight())
-        //     {
-        //         _stateMachine.ChangeState(new ChasePlayer(this));
-        //     }
-        //     else if (!CheckPlayerOnSight())
-        //     {
-        //         _stateMachine.ChangeState(new WanderToPlayerRoom(this));
-        //     }
-        // }
-    }
 }

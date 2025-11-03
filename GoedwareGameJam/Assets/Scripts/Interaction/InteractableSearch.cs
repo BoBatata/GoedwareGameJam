@@ -1,31 +1,51 @@
+using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InteractableSearch : InteractableBase
 {
     [SerializeField] private int searchLevel;
+    [SerializeField] private int currentSearchLevel;
     [SerializeField] private float timeToSearch;
     [SerializeField] private float timeLapsed;
     [SerializeField] public bool _doHaveKey;
+    [SerializeField] private Slider sliderKey;
     private bool _alreadySearched;
     private bool _interacting;
+
+    private void Start()
+    {
+        sliderKey.maxValue = searchLevel;
+    }
 
     public override void Interact(bool isInteract)
     {
         if(_alreadySearched)  return;
         
-        if (searchLevel == 2)
+        if (currentSearchLevel == searchLevel)
         {
             if (_doHaveKey)
             {
                 GameManager.Instance.EarnKey(1);
+                sliderKey.enabled = false;
                 _alreadySearched = true;
             }
             else if (!_doHaveKey)
             {
                 Debug.Log("Não tem nada aqui");
+                sliderKey.enabled = false;
                 _alreadySearched = true;
             }
             
+        }
+
+        if (_interacting)
+        {
+            GameManager.Instance.player.playerInteraction.isPlayerInteracting = true;
+        }
+        else
+        {
+            GameManager.Instance.player.playerInteraction.isPlayerInteracting = false;
         }
         
         if (isInteract)
@@ -36,7 +56,8 @@ public class InteractableSearch : InteractableBase
             if (timeLapsed >= timeToSearch)
             {
                 Debug.Log("✅ Interação completada segurando!");
-                searchLevel += 1;
+                currentSearchLevel += 1;
+                sliderKey.value = currentSearchLevel;
                 timeLapsed = 0;
                 _interacting = false;
             }

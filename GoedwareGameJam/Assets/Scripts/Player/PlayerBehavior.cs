@@ -12,7 +12,7 @@ public class PlayerBehavior : MonoBehaviour
     
     public InputManager inputManager;
     private PlayerMovement _playerMovement;
-    private PlayerInteraction _playerInteraction;
+    public PlayerInteraction playerInteraction;
 
     [SerializeField] public bool canBeInSight = true;
 
@@ -20,7 +20,7 @@ public class PlayerBehavior : MonoBehaviour
     {
         inputManager = new InputManager();
         _playerMovement = GetComponent<PlayerMovement>();
-        _playerInteraction = GetComponent<PlayerInteraction>();
+        playerInteraction = GetComponent<PlayerInteraction>();
     }
 
     private void Update()
@@ -32,6 +32,6 @@ public class PlayerBehavior : MonoBehaviour
         }
         
         _playerMovement.WalkHandler(inputManager.MoveDir);
-        _playerInteraction.InteractHandler(inputManager.interact);
+        playerInteraction.InteractHandler(inputManager.interact);
     }
 }

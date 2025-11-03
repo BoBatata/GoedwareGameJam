@@ -23,7 +23,7 @@ public class WanderInRoom : State
 
     public override void Update()
     {
-        if (_entity.CheckPlayerOnSight() && _entity._bef.isInfected && _entity._bef.isInfectedHuntTime)
+        if (_entity._bef.isPlayerInSight && _entity._bef.isInfected && _entity._bef.isInfectedHuntTime)
         {
             _entity._stateMachine.ChangeState(new IdleState(_entity));
             return;
