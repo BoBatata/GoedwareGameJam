@@ -3,6 +3,9 @@ using UnityEngine;
 public class DialogueNPCs : DialogueObj
 {
     private BaseAI baseAi;
+    private string correctRoom;
+    private string wrongRoom;
+    
     protected override void Awake()
     {
         base.Awake();
@@ -11,6 +14,8 @@ public class DialogueNPCs : DialogueObj
 
     public override void Interact(bool isInteract)
     {
+        if (baseAi._bef.isInfectedHuntTime) return;
+        
         if (isInteract && !_hasInteracted)
         {
             GameManager.Instance.dialogueManager.StartDialogue(dialogues);

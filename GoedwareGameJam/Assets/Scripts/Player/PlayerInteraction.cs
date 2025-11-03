@@ -5,11 +5,13 @@ public class PlayerInteraction : MonoBehaviour
 {
     [SerializeField] private float interactionRange;
     [SerializeField] private LayerMask layerMask;
+    public bool isPlayerInteracting;
 
-    private Collider _closestObject;
+    public Collider _closestObject;
 
     private void Update()
     {
+        if (isPlayerInteracting) return;
         CloseInteractableObj();
     }
 
