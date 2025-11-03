@@ -13,11 +13,11 @@ public class IdleState : State
     {
         if (_entity._bef.isInfected && _entity._bef.isInfectedHuntTime)
         {
-            if (_entity.CheckPlayerOnSight())
+            if (_entity._bef.isPlayerInSight)
             {
                 _entity._stateMachine.ChangeState(new ChasePlayer(_entity));
             }
-            else if (!_entity.CheckPlayerOnSight())
+            else if (!_entity._bef.isPlayerInSight)
             {
                 _entity._stateMachine.ChangeState(new WanderToPlayerRoom(_entity));
             }
